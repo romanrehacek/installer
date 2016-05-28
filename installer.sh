@@ -1,0 +1,90 @@
+#!/bin/sh
+
+# Copyright 2016 Roman Rehacek
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+echo "\033[44mDeleting unnecessary files and folders\033[m\n"
+if [ -f README.md ]; then
+    rm README.md
+fi
+
+if [ -f php.ini ]; then
+    rm php.ini
+fi
+
+if [ -f hello-world.php ]; then
+    rm hello-world.php
+fi
+
+if [ -d wordpress ]; then
+    rm -rf wordpress
+fi
+
+echo "\033[44mInit npm...\033[m\n"
+npm init -f
+
+echo "\033[44mInstall gulp...\033[m\n"
+npm install gulp -g
+npm install --save-dev gulp
+
+echo "\033[44mInstall gulp packages...\033[m\n"
+npm install --save-dev gulp-less gulp-clean-css gulp-uglify gulp-rename stream-combiner2 vinyl-ftp
+
+echo "\033[44mDownload gulpfile.js...\033[m\n"
+wget "https://raw.githubusercontent.com/romanrehacek/starter-commands/master/gulpfile.js" -N -q
+
+if [ -f gulpfile.js ]; then
+    echo "\033[42mDownload success.\033[m"
+fi
+
+echo -n "\n\033[41mEnter path to theme\033[m etc. './wp-content/themes/name/' (leave blank for './'): "
+read path
+
+# Set default value
+path=${path:-./}
+
+# Replace path in gulpfile.js
+sed -i "s/\[enter_path\]/$(echo $path | sed -e 's/[\/&]/\\&/g')/g" gulpfile.js
+
+if [ -f wp-config-sample.php ]; then
+    echo -n "\n\033[41mInstall new theme? [y/n]:\033[m "
+    read new_theme
+    
+    if test "$new_theme" = "y"; then
+        dirName=$(basename "$path")
+        
+        pathToTheme=$(echo $path | sed 's!'"$dirName"'.*!!g')
+        
+        if test "$pathToTheme" != ""; then
+            rm -R -- ${pathToTheme}* 
+            wget "https://github.com/romanrehacek/default-wp-theme/archive/master.zip" -N -q
+            unzip master.zip -d $pathToTheme
+            rm master.zip
+            mv ${pathToTheme}default-wp-theme-master ${pathToTheme}${dirName}
+            
+            echo -n "\n\033[41mEnter theme name\033[m (leave blank for 'Example theme'): "
+            read themeName
+            
+            echo -n "\n\033[41mEnter site domain\033[m (leave blank for 'example.com'): "
+            read domainName
+            
+            sed -i "s/\[theme_name\]/$(echo $themeName | sed -e 's/[\/&]/\\&/g')/g" ${pathToTheme}${dirName}/style.css
+            sed -i "s/\[domain_name\]/$(echo $domainName | sed -e 's/[\/&]/\\&/g')/g" ${pathToTheme}${dirName}/style.css
+            sed -i "s/\[dir_name\]/$(echo $dirName | sed -e 's/[\/&]/\\&/g')/g" ${pathToTheme}${dirName}/style.css
+        fi
+    fi
+fi
+
+#END
+echo -n "\n\033[42mAll done.\033[m\n"
