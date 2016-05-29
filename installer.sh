@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#wget https://preview.c9users.io/romanrehacek/installers/x.sh -v -O install.sh && chmod +x install.sh && ./install.sh; rm -rf install.sh
+
 echo "\033[44mDeleting unnecessary files and folders\033[m\n"
 if [ -f README.md ]; then
     rm README.md
@@ -32,20 +34,23 @@ if [ -d wordpress ]; then
 fi
 
 echo "\033[44mInit npm...\033[m\n"
-npm init -f
+#npm init -f
 
 echo "\033[44mInstall gulp...\033[m\n"
-npm install gulp -g
-npm install --save-dev gulp
+#npm install gulp -g
+#npm install --save-dev gulp
 
 echo "\033[44mInstall gulp packages...\033[m\n"
-npm install --save-dev gulp-less gulp-clean-css gulp-uglify gulp-rename stream-combiner2 vinyl-ftp
+#npm install --save-dev gulp-less gulp-clean-css gulp-uglify gulp-rename stream-combiner2 vinyl-ftp
 
 echo "\033[44mDownload gulpfile.js...\033[m\n"
 wget "https://raw.githubusercontent.com/romanrehacek/starter-commands/master/gulpfile.js" -N -q
 
 if [ -f gulpfile.js ]; then
     echo "\033[42mDownload success.\033[m"
+else
+    echo "\n\033[41mERROR: gulpfile.js didn't downloaded!\033[m\n"
+    exit
 fi
 
 echo -n "\n\033[41mEnter path to theme\033[m etc. './wp-content/themes/name/' (leave blank for './'): "
@@ -53,6 +58,12 @@ read path
 
 # Set default value
 path=${path:-./}
+
+# remove last slash if exists
+path=$(echo "$path"|sed 's/\/$//g')
+
+# add slash as last char
+path=$path"/"
 
 # Replace path in gulpfile.js
 sed -i "s/\[enter_path\]/$(echo $path | sed -e 's/[\/&]/\\&/g')/g" gulpfile.js
@@ -69,6 +80,10 @@ if [ -f wp-config-sample.php ]; then
         if test "$pathToTheme" != ""; then
             rm -R -- ${pathToTheme}* 
             wget "https://github.com/romanrehacek/default-wp-theme/archive/master.zip" -N -q
+            if [ ! -f master.zip ]; then
+                echo "\n\033[41mERROR: master.zip didn't downloaded!\033[m\n"
+                exit
+            fi
             unzip master.zip -d $pathToTheme
             rm master.zip
             mv ${pathToTheme}default-wp-theme-master ${pathToTheme}${dirName}
