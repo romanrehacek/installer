@@ -2,5 +2,5 @@
 Install gulp and starter wp theme
 
 ```
-wget "https://github.com/romanrehacek/installer/installer.sh" | bash
+wget https://preview.c9users.io/romanrehacek/installers/x.sh -v -O install.sh && chmod +x install.sh && ./install.sh; rm -rf install.sh
 ```
