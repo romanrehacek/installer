@@ -68,7 +68,7 @@ path=$path"/"
 # Replace path in gulpfile.js
 sed -i "s/\[enter_path\]/$(echo $path | sed -e 's/[\/&]/\\&/g')/g" gulpfile.js
 
-if [ -f wp-config-sample.php ]; then
+if [ -d "wp-includes" ]; then
     echo -n "\n\033[41mInstall new theme? [y/n]:\033[m "
     read new_theme
     
