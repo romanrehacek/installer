@@ -14,6 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# TODO
+# 1. remove start.sh after finish
+
 #wget https://preview.c9users.io/romanrehacek/installers/x.sh -v -O install.sh && chmod +x install.sh && ./install.sh; rm -rf install.sh
 
 echo "\033[44mDeleting unnecessary files and folders\033[m\n"
