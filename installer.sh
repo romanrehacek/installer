@@ -44,7 +44,7 @@ npm install gulp -g
 npm install --save-dev gulp
 
 echo "\033[44mInstall gulp packages...\033[m\n"
-npm install --save-dev gulp-less gulp-clean-css gulp-uglify gulp-rename stream-combiner2 gulp-watch
+npm install --save-dev gulp-less gulp-clean-css gulp-uglify gulp-rename stream-combiner2 gulp-watch gulp-util pretty-hrtime
 
 echo "\033[44mDownload gulpfile.js...\033[m\n"
 wget "https://raw.githubusercontent.com/romanrehacek/starter-commands/master/gulpfile.js" -N -q
@@ -102,6 +102,10 @@ if [ -d "wp-includes" ]; then
             sed -i "s/\[dir_name\]/$(echo $dirName | sed -e 's/[\/&]/\\&/g')/g" ${pathToTheme}${dirName}/style.css
         fi
     fi
+fi
+
+if [ -f start.sh ]; then
+    rm start.sh
 fi
 
 #END
