@@ -108,5 +108,19 @@ if [ -f start.sh ]; then
     rm start.sh
 fi
 
+echo "\033[44mInstall Git WebUI...\033[m\n"
+cd $HOME
+rm -rf .git-webui > /dev/null 2>&1
+echo "Cloning git-webui repository"
+git clone --depth 1 https://github.com/alberthier/git-webui.git .git-webui
+echo "Enabling auto update"
+git config --global --replace-all webui.autoupdate true
+echo "Installing 'webui' alias"
+if [ "$OS" = "Windows_NT" ]; then
+    git config --global --replace-all alias.webui "!${PYTHON} $HOME/.git-webui/release/libexec/git-core/git-webui"
+else
+    git config --global --replace-all alias.webui !$HOME/.git-webui/release/libexec/git-core/git-webui
+fi
+
 #END
 echo -n "\n\033[42mAll done.\033[m\n"
