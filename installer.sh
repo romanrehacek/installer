@@ -76,6 +76,9 @@ if [ -d "wp-includes" ]; then
     read new_theme
     
     if test "$new_theme" = "y"; then
+        echo "\033[44mDownload .htaccess...\033[m\n"
+        wget "https://raw.githubusercontent.com/romanrehacek/starter-commands/master/.htaccess" -N -q
+        
         dirName=$(basename "$path")
         
         pathToTheme=$(echo $path | sed 's!'"$dirName"'.*!!g')
