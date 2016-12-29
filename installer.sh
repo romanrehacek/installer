@@ -41,7 +41,7 @@ npm install gulp -g
 npm install --save-dev gulp
 
 echo "\033[44mInstall gulp packages...\033[m\n"
-npm install --save-dev gulp-less gulp-rename gulp-clean-css gulp-uglify stream-combiner2 gulp-watch gulp-util pretty-hrtime gulp-concat gulp-inquirer
+npm install --save-dev gulp-less gulp-rename gulp-clean-css gulp-uglify stream-combiner2 gulp-watch gulp-util pretty-hrtime gulp-concat inquirer
 
 echo "\033[44mDownload gulpfile.js...\033[m\n"
 wget "https://raw.githubusercontent.com/romanrehacek/gulpfile/master/gulpfile.js" -N -q
