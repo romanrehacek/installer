@@ -14,9 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO
-# 1. remove start.sh after finish
-
 #wget https://preview.c9users.io/romanrehacek/installers/x.sh -v -O install.sh && chmod +x install.sh && ./install.sh; rm -rf install.sh
 
 echo "\033[44mDeleting unnecessary files and folders\033[m\n"
@@ -44,10 +41,10 @@ npm install gulp -g
 npm install --save-dev gulp
 
 echo "\033[44mInstall gulp packages...\033[m\n"
-npm install --save-dev gulp-less gulp-clean-css gulp-uglify gulp-rename stream-combiner2 gulp-watch gulp-util pretty-hrtime gulp-concat
+npm install --save-dev gulp-less gulp-rename gulp-clean-css gulp-uglify stream-combiner2 gulp-watch gulp-util pretty-hrtime gulp-concat gulp-inquirer
 
 echo "\033[44mDownload gulpfile.js...\033[m\n"
-wget "https://raw.githubusercontent.com/romanrehacek/starter-commands/master/gulpfile.js" -N -q
+wget "https://raw.githubusercontent.com/romanrehacek/gulpfile/master/gulpfile.js" -N -q
 
 if [ -f gulpfile.js ]; then
     echo "\033[42mDownload success.\033[m"
