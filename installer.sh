@@ -43,7 +43,7 @@ npm install gulp -g
 npm install --save-dev gulp
 
 echo "\033[44mInstall gulp packages...\033[m\n"
-npm install --save-dev gulp-less gulp-rename gulp-clean-css gulp-uglify stream-combiner2 gulp-watch gulp-util pretty-hrtime gulp-concat inquirer find-in-files
+npm install --save-dev gulp-less gulp-rename gulp-clean-css gulp-uglify stream-combiner2 gulp-watch gulp-util pretty-hrtime gulp-concat inquirer find-in-files gulp-sass
 
 echo "\033[44mDownload gulpfile.js...\033[m\n"
 wget "https://raw.githubusercontent.com/romanrehacek/gulpfile/master/gulpfile.js" -N -q
@@ -165,10 +165,8 @@ if ([ -d "wp-includes" ] && test "$new_theme" = "n" ) || ( [ ! -d "wp-includes" 
     fi
 fi
 
-if [ ! -d ".c9" ]; then
-    if [ -f start.sh ]; then
-        rm start.sh
-    fi
+if [ -f start.sh ]; then
+    rm start.sh
 fi
 
 echo "\033[44mInstall Git WebUI...\033[m\n"
